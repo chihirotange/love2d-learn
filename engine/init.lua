@@ -7,7 +7,7 @@ Input = require "engine/input"
 require "engine/room"
 require "engine.area"
 require "engine.gameObject"
-require "engine.Shake"
+require "engine.shake"
 Camera = require "engine.camera"
 
 function love.run()
