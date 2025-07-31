@@ -21,5 +21,5 @@ jobs:
     - name: Upload .love artifact
       uses: actions/upload-artifact@v4
       with:
-        name: mygame
+        name: mygame.love
         path: mygame.love
