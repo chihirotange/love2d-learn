@@ -79,7 +79,6 @@ function love.draw()
     love.graphics.setCanvas(canvas)
     love.graphics.clear()
     camera:attach(0, 0, gw*sx, gh*sy)
-    love.graphics.circle("line", gw/2, gh/2, 20)
     if currentRoom then currentRoom:draw() end
         camera:detach()
         love.graphics.setCanvas()

@@ -1,3 +1,4 @@
+-- every game objects should inherit GameObject i guess
 GameObject = Object:extend()
 
 function GameObject:new(area, x, y, opt)
