@@ -1,14 +1,31 @@
 require "engine"
+require "objects.circle"
 
-MainMenu = Room:extend()
+CircleRoom = Room:extend()
 
-function MainMenu:update(dt)
-end
 function love.load()
-    Input:bind("mouse1", "test")
+    Input:bind("f1", "f1")
+    Input:bind("f2", "f2")
+    Input:bind("f3", "f3")
+
+    local circleRoom1 = addRoom("CircleRoom", "circleRoom1")
+    local circleArea1 = Area(circleRoom1)
+    circleArea1:addGameObject("Circle", 400, 100, {radius = 99})
+    local circleRoom2 = addRoom("CircleRoom", "circleRoom2")
+    local circleArea2 = Area(circleRoom2)
+    circleArea2:addGameObject("Circle", 200, 500, {radius = 10})
 end
 
 function love.update(dt)
+    if Input:pressed("f1") then
+        gotoRoom("circleRoom1")
+    end
+    if Input:pressed("f2") then
+        gotoRoom("circleRoom2")
+    end
+    if Input:pressed("f3") then
+        print("f3")
+    end
 end
 
 function love.draw()

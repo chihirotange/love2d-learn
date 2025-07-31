@@ -1,13 +1,16 @@
 -- require this BEFORE everything else
+require "engine/utils"
 
 Object = require "engine/classic"
 Timer = require "engine/timer"
 Input = require "engine/input"
-Room = require "engine/room"
+require "engine/room"
+require "engine.area"
+require "engine.gameObject"
 
 function love.run()
     -- init global objects
-    Timer = Timer()
+    timer = Timer()
     Input = Input()
     if love.load then love.load(love.arg.parseGameArguments(arg), arg) end
 
@@ -35,7 +38,7 @@ function love.run()
 		if love.timer then dt = love.timer.step() end
 
 		-- Call update and draw
-        Timer:update(dt)
+        timer:update(dt)
 			
 		-- update room
 		if currentRoom then
@@ -47,8 +50,8 @@ function love.run()
 			love.graphics.origin()
 			love.graphics.clear(love.graphics.getBackgroundColor())
 
+			if currentRoom then currentRoom:draw() end
 			if love.draw then love.draw() end
-
 			love.graphics.present()
 		end
 

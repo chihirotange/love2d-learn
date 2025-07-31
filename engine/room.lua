@@ -1,9 +1,9 @@
 rooms = {}
 currentRoom = nil
 
-local Room = Object:extend()
+Room = Object:extend()
 function Room:new()
-    print("room created")
+    self.areas = {}
 end
 
 function Room:active()
@@ -12,10 +12,22 @@ end
 function Room:deactivate()
 end
 
-function Room:update()
+function Room:update(dt)
+    for _, area in ipairs(self.areas) do
+        area:update(dt)
+    end
 end
 
 function Room:draw()
+    for _, area in ipairs(self.areas) do
+        area:draw()
+    end
+end
+
+function Room:addArea(area)
+    if area then 
+        table.insert(self.areas, area) 
+    end
 end
 
 function addRoom(roomType, roomName, ...)
@@ -24,14 +36,12 @@ function addRoom(roomType, roomName, ...)
     return room
 end
 
-function gotoRoom(roomType, roomName, ...)
-    if currentRoom and rooms[roomName] then
-        currentRoom:deactivate()
+function gotoRoom(roomName)
+    if rooms[roomName] then
+        if currentRoom then
+            currentRoom:deactivate()
+        end
         currentRoom = rooms[roomName]
         currentRoom:active()
-    else
-        currentRoom = addRoom(roomType, roomName, ...)
     end
 end
-
-return Room
