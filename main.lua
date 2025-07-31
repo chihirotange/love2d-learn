@@ -6,6 +6,7 @@ CircleRoom = Room:extend()
 function love.load()
     Input:bind("f1", "f1")
     Input:bind("f2", "f2")
+    Input:bind("f3", "shake")
 
     local circleRoom1 = addRoom("CircleRoom", "circleRoom1")
     local circleArea1 = Area(circleRoom1)
@@ -21,5 +22,9 @@ function love.update(dt)
     end
     if Input:pressed("f2") then
         gotoRoom("circleRoom2")
+    end
+    if Input:pressed("shake") then
+        print("shake")
+        camera:shake(5, 60, 1)
     end
 end

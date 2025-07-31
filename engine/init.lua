@@ -7,6 +7,8 @@ Input = require "engine/input"
 require "engine/room"
 require "engine.area"
 require "engine.gameObject"
+require "engine.Shake"
+Camera = require "engine.camera"
 
 function love.run()
     -- init global objects
@@ -21,13 +23,16 @@ function love.run()
 	local dt = 0
 
     -- setup canvas
+    love.graphics.setDefaultFilter("nearest")
+    love.graphics.setLineStyle("rough")
     canvas = love.graphics.newCanvas(gw, gh)
 
     love.graphics.setCanvas(canvas)
     love.graphics.setCanvas()
 
-    love.graphics.setDefaultFilter("nearest")
-    love.graphics.setLineStyle("rough")
+
+    -- setup camera
+    camera = Camera()
 	return function()
 		-- Process events.
 		if love.event then
@@ -52,24 +57,37 @@ function love.run()
 		if currentRoom then
 			currentRoom:update(dt)
 		end
-		if love.update then love.update(dt) end -- will pass 0 if love.timer is disabled
 
+        -- update camera
+        camera:update(dt)
+
+        -- love's update
+		if love.update then love.update(dt) end -- will pass 0 if love.timer is disabled
+        
+        -- and love.draw
 		if love.graphics and love.graphics.isActive() then
+            love.graphics.origin()
+            love.graphics.clear()
             if love.draw then love.draw() end
-            if love.timer then love.timer.sleep(0.001) end
-            end
+            love.graphics.present()
         end
+        if love.timer then love.timer.sleep(0.001) end
+    end
 end
 function love.draw()
     -- TODO: learn about these "canvas"
     love.graphics.setCanvas(canvas)
     love.graphics.clear()
+    camera:attach(0, 0, gw*sx, gh*sy)
+    love.graphics.circle("line", gw/2, gh/2, 20)
     if currentRoom then currentRoom:draw() end
-    love.graphics.setCanvas()
+        camera:detach()
+        love.graphics.setCanvas()
     
+    --draw the canvas itself
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.setBlendMode("alpha", "premultiplied")
     love.graphics.draw(canvas, 0, 0, 0, sx, sy)
+
     love.graphics.setBlendMode('alpha')
-    love.graphics.present()
 end
