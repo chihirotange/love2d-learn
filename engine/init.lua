@@ -3,6 +3,7 @@
 Object = require "engine/classic"
 Timer = require "engine/timer"
 Input = require "engine/input"
+Room = require "engine/room"
 
 function love.run()
     -- init global objects
@@ -34,8 +35,12 @@ function love.run()
 		if love.timer then dt = love.timer.step() end
 
 		-- Call update and draw
-        Input:update(dt)
         Timer:update(dt)
+			
+		-- update room
+		if currentRoom then
+			currentRoom:update(dt)
+		end
 		if love.update then love.update(dt) end -- will pass 0 if love.timer is disabled
 
 		if love.graphics and love.graphics.isActive() then

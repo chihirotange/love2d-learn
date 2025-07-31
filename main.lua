@@ -1,6 +1,11 @@
 require "engine"
+
+MainMenu = Room:extend()
+
+function MainMenu:update(dt)
+end
 function love.load()
-    Timer:after(1, function() print("hello world") end)
+    Input:bind("mouse1", "test")
 end
 
 function love.update(dt)
