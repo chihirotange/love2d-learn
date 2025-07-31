@@ -1,0 +1,25 @@
+name: Build LÖVE2D Game
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up zip
+      run: sudo apt-get install zip
+
+    - name: Create .love file
+      run: |
+        zip -9 -r mygame.love . -x '*.git*' -x '*.github*'
+
+    - name: Upload .love artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: mygame
+        path: mygame.love
