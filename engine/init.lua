@@ -23,13 +23,13 @@ function love.run()
 	local dt = 0
 
     -- setup canvas
+    love.graphics.setDefaultFilter("nearest")
+    love.graphics.setLineStyle("rough")
     canvas = love.graphics.newCanvas(gw, gh)
 
     love.graphics.setCanvas(canvas)
     love.graphics.setCanvas()
 
-    love.graphics.setDefaultFilter("nearest")
-    love.graphics.setLineStyle("rough")
 
     -- setup camera
     camera = Camera()
@@ -66,10 +66,13 @@ function love.run()
         
         -- and love.draw
 		if love.graphics and love.graphics.isActive() then
+            love.graphics.origin()
+            love.graphics.clear()
             if love.draw then love.draw() end
-            if love.timer then love.timer.sleep(0.001) end
-            end
+            love.graphics.present()
         end
+        if love.timer then love.timer.sleep(0.001) end
+    end
 end
 function love.draw()
     -- TODO: learn about these "canvas"
@@ -78,8 +81,8 @@ function love.draw()
     camera:attach(0, 0, gw*sx, gh*sy)
     love.graphics.circle("line", gw/2, gh/2, 20)
     if currentRoom then currentRoom:draw() end
-    camera:detach()
-    love.graphics.setCanvas()
+        camera:detach()
+        love.graphics.setCanvas()
     
     --draw the canvas itself
     love.graphics.setColor(255, 255, 255, 255)
@@ -87,5 +90,4 @@ function love.draw()
     love.graphics.draw(canvas, 0, 0, 0, sx, sy)
 
     love.graphics.setBlendMode('alpha')
-    love.graphics.present()
 end

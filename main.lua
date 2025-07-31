@@ -25,6 +25,6 @@ function love.update(dt)
     end
     if Input:pressed("shake") then
         print("shake")
-        camera:shake(4, 60, 1)
+        camera:shake(5, 60, 1)
     end
 end
