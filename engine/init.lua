@@ -12,6 +12,7 @@ function love.run()
     -- init global objects
     timer = Timer()
     Input = Input()
+    love.window.setMode(sx*gw, sy*gh)
     if love.load then love.load(love.arg.parseGameArguments(arg), arg) end
 
 	-- We don't want the first frame's dt to include time taken by love.load.
@@ -19,7 +20,14 @@ function love.run()
 
 	local dt = 0
 
-	-- Main loop time.
+    -- setup canvas
+    canvas = love.graphics.newCanvas(gw, gh)
+
+    love.graphics.setCanvas(canvas)
+    love.graphics.setCanvas()
+
+    love.graphics.setDefaultFilter("nearest")
+    love.graphics.setLineStyle("rough")
 	return function()
 		-- Process events.
 		if love.event then
@@ -47,14 +55,21 @@ function love.run()
 		if love.update then love.update(dt) end -- will pass 0 if love.timer is disabled
 
 		if love.graphics and love.graphics.isActive() then
-			love.graphics.origin()
-			love.graphics.clear(love.graphics.getBackgroundColor())
-
-			if currentRoom then currentRoom:draw() end
-			if love.draw then love.draw() end
-			love.graphics.present()
-		end
-
-		if love.timer then love.timer.sleep(0.001) end
-	end
+            if love.draw then love.draw() end
+            if love.timer then love.timer.sleep(0.001) end
+            end
+        end
+end
+function love.draw()
+    -- TODO: learn about these "canvas"
+    love.graphics.setCanvas(canvas)
+    love.graphics.clear()
+    if currentRoom then currentRoom:draw() end
+    love.graphics.setCanvas()
+    
+    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.setBlendMode("alpha", "premultiplied")
+    love.graphics.draw(canvas, 0, 0, 0, sx, sy)
+    love.graphics.setBlendMode('alpha')
+    love.graphics.present()
 end
