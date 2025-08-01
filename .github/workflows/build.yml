@@ -36,8 +36,6 @@ jobs:
         copy /b love-11.5-win64\love.exe+mygame.love game-dist\mygame.exe
         xcopy love-11.5-win64\*.dll game-dist\
         copy license.txt game-dist\
-        del love-11.5-win64\love.exe
-        del love-11.5-win64\lovec.exe
         cd game-dist
         7z a -tzip ..\mygame-windows.zip *
 
@@ -60,5 +58,3 @@ jobs:
         BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       run: |
         .\\butler\\butler.exe push game-dist chiichan-makes-game/ais-game:windows
-        # Replace YOUR_ITCH_USERNAME with your itch.io username
-        # Replace YOUR_GAME_NAME with your game's name on itch.io
