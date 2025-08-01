@@ -21,7 +21,7 @@ jobs:
     - name: If LOVE distribution is not found, download
       # if: steps.cache-love.outputs.cache-hit != 'true'
       run: |
-        curl -L -C --output love.zip https://github.com/love2d/love/releases/download/11.5/love-11.5-win64.zip
+        curl -L -C - --output love.zip https://github.com/love2d/love/releases/download/11.5/love-11.5-win64.zip
         7z x love.zip
     - name: Create .love file
       shell: cmd
