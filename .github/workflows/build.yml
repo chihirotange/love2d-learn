@@ -19,7 +19,7 @@ jobs:
         key: love-11.5-win64-v1
 
     - name: If LOVE distribution is not found, download
-      if: steps.cache-love.outputs.cache-hit != 'true'
+      # if: steps.cache-love.outputs.cache-hit != 'true'
       run: |
         curl -L --output love.zip https://github.com/love2d/love/releases/download/11.5/love-11.5-win64.zip
         7z x love.zip
