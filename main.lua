@@ -11,6 +11,7 @@ function love.load()
 
     local circleRoom1 = addRoom("CircleRoom", "circleRoom1")
     local circleArea1 = Area(circleRoom1)
+    cirlce = circleArea1:addGameObject("Circle", 20, 20, {radius = 10})
     player = circleArea1:addGameObject("Player", gw/2, gh/2)
     gotoRoom("circleRoom1")
     -- local circleRoom2 = addRoom("CircleRoom", "circleRoom2")
