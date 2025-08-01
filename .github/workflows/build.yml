@@ -19,7 +19,8 @@ jobs:
     - name: Create .love file
       shell: cmd
       run: |
-        7z a -tzip mygame.love . -xr!.git -xr!.github -xr!love-11.5-win64
+        dir /s /b
+        7z a -tzip mygame.love . -xr!.git -xr!.github -xr!love-11.5-win64 -xr!*.zip
 
     - name: Create Windows executable
       shell: cmd
