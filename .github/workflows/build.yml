@@ -57,15 +57,17 @@ jobs:
         path: mygame-windows.zip
 
     - name: Download Butler
+      shell: cmd
       run: |
-        powershell -Command "Invoke-WebRequest https://broth.itch.ovh/butler/windows-amd64/LATEST/archive/default -OutFile butler.zip"
-        7z x butler.zip -o.\\butler
-        .\\butler\\butler.exe version
+        curl -L -o butler.zip https://broth.itch.ovh/butler/windows-amd64/LATEST/archive/default
+        mkdir butler
+        7z x butler.zip -obutler
+        butler\butler.exe version
 
     - name: Push to itch.io
       env:
         BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       run: |
-        .\\butler\\butler.exe push game-dist YOUR_ITCH_USERNAME/YOUR_GAME_NAME:windows
+        .\\butler\\butler.exe push game-dist chiichan-makes-game/ais-game:windows
         # Replace YOUR_ITCH_USERNAME with your itch.io username
         # Replace YOUR_GAME_NAME with your game's name on itch.io
