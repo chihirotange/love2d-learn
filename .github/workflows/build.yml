@@ -45,7 +45,15 @@ jobs:
         name: mygame-windows
         path: mygame-windows.zip
 
-    - name: Download Butler
+    - name: Cache Butler
+      id: cache-butler
+      uses: actions/cache@v4
+      with:
+        path: butler
+        key: butler-v1
+
+    - name: Download Butler if not cached
+      if: steps.cache-butler.outputs.cache-hit != 'true'
       shell: cmd
       run: |
         curl -L -o butler.zip https://broth.itch.ovh/butler/windows-amd64/LATEST/archive/default
