@@ -1,9 +1,14 @@
+require "engine.area"
+
 rooms = {}
 currentRoom = nil
 
 Room = Object:extend()
+-- use addRoom instead
 function Room:new()
     self.areas = {}
+    self.defaultArea = Area(self)
+    table.insert(self.areas, self.defaultArea)
 end
 
 function Room:active()
@@ -28,6 +33,11 @@ function Room:addArea(area)
     if area then 
         table.insert(self.areas, area) 
     end
+end
+
+function Room:spawn(objectType, x, y, opts)
+    local gameObject = self.defaultArea:addGameObject(objectType, x, y, opts)
+    return gameObject
 end
 
 function addRoom(roomType, roomName, ...)
