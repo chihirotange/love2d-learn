@@ -45,7 +45,6 @@ function addRoom(roomType, roomName, ...)
     rooms[roomName] = room
     return room
 end
-
 function gotoRoom(roomName)
     if rooms[roomName] then
         if currentRoom then
