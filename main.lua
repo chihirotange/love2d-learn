@@ -1,3 +1,6 @@
+--@class love
+love = love
+
 require "engine"
 require "objects.circle"
 require "objects.player"
